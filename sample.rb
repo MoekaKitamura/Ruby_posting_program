@@ -1,3 +1,36 @@
+def display_result
+  puts "これまでの結果"
+  File.open("data.txt", "r") do |file|
+    file.each_line do |line|
+      puts line
+    end
+  end
+end
+
+def save_result(post)
+  File.open("data.txt", "a") do |file|
+    file.puts(post)
+  end
+end
+
+def input_point_and_comment
+  puts "1から5の数字で評価を入力してください"
+  point = gets.to_i
+  
+  while true
+    if point != 0 && point <= 5
+      puts "コメントを入力してください"
+      comment = gets
+      post = "ポイント: #{point} コメント: #{comment}"
+      save_result(post)
+      break
+    else
+      puts "1から5で入力してください"
+      point = gets.to_i
+    end
+  end
+end
+
 while true
   puts "\n実施したい処理を選択してください"
   puts "1:評価ポイントとコメントを入力する"
@@ -7,31 +40,9 @@ while true
 
   case num
   when 1
-    puts "1から5の数字で評価を入力してください"
-    point = gets.to_i
-    
-    while true
-      if point != 0 && point <= 5
-        puts "コメントを入力してください"
-        comment = gets
-        post = "ポイント: #{point} コメント: #{comment}"
-        
-        File.open("data.txt", "a") do |file|
-          file.puts(post)
-        end
-        break
-      else
-        puts "1から5で入力してください"
-        point = gets.to_i
-      end
-    end
+    input_point_and_comment
   when 2
-    puts "これまでの結果"
-    File.open("data.txt", "r") do |file|
-      file.each_line do |line|
-        puts line
-      end
-    end
+    display_result
   when 3
     puts "終了します"
     break
